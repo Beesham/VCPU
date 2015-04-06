@@ -52,37 +52,8 @@ void splitIR(){
 	7: stop
 */
 
-int insType(){
-
-	printf("\nDetermining ins type\n");
-
-	switch((irX >> 13)){
-	case 0:
-		return 0;
-		break;
-	case 1:
-		return 1;
-		break;
-	case 2:
-		return 2;//(irX >> 14);
-		break;
-	case 3:
-		return 3;//(irX >> 14);
-		break;
-	case 4:
-		return 4;
-		break;
-	case 5:
-		return 5;
-		break;
-	case 6:
-		return 6;
-		break;
-	case 7:
-		return 7;
-		break;
-	}//end of switch
-
+int insType() {
+	return irX >> 13;
 }
 
 /*
