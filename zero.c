@@ -1,9 +1,10 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
+//#include <stdio.h>
+//#include <stdlib.h>
+//#include <string.h>
+//#include <ctype.h>
 
-#include "registersVar.h"
+//#include "RegistersVar.h"
+#include "MyLib.h"
 
 /*
 	zero class
@@ -13,7 +14,7 @@ void zero(){
 	int i;
 	//reg[15] = 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0;
 
-	for(i=0;i<sizeof(reg);i++) reg[i] = 0;
+	for(i=0;i<NUM_OF_REGS;i++) reg[i] = 0;
 
 	signF = 0;
 	zeroF = 0;
@@ -23,7 +24,5 @@ void zero(){
 	mbR = 0;
 	maR = 0;
 	irR = 0;
-	pc = 0;
-
 
 }//end ofdisRegisters

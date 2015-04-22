@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
@@ -14,31 +13,40 @@
 */
 
 void memDump(void *memptr, unsigned offset, unsigned length){
-	int i,n=0,j=offset,lineSize=16;
-	for(n,i=offset;n<length,i<=length;n++,i++){
+	int i,n=0,lineSize=16;
+	
+	for(i=offset;i<(offset+length);i +=lineSize){
+		printf("\n");
+		n=i;
+		printf("%04X  ",i);	 //prints beginning of location
 
-		if ((((n % lineSize)==0) && n>=lineSize)||i==length){
-			printf("\n");
-			printf("       ");
-			for (j;j<i;j++){
-						if (isprint(((unsigned char*)memptr)[j])){
-							printf("%c  ",((unsigned char*)memptr)[j] );	//prints the character at location
-						}
-						else printf(".  ");
-				}
+		while(n <(i+lineSize)){
+			if(n == (offset+length)){
+				break;
+			}
+
+			printf("%02X ",((unsigned char*)memptr)[n]);	//prints hex value
+			n++;
+
+		}//end of while
+
+		printf("\n       ");
+		n=i;
+		while(n <(i+lineSize)){
+			if(n == (offset+length)){
+				break;
+			}
+			if (isprint(((unsigned char*)memptr)[n])){
+				printf("%c  ",((unsigned char*)memptr)[n] );	//prints the character at location
+			}
+			else printf(".  ");
+
+			n++;
 		}
-
-		if ((n % lineSize) == 0){
-			printf("\n");
-			printf("%04X  ",i);	 //prints beginning of location
-		}
-
-		if(i!=length)	printf("%02X ",((unsigned char*)memptr)[i]);	//prints hex value
-
-		//getchar();
-
+		printf("\n");
 	}//end of for
-
+		
 	printf("\n");
+	
 
 }//end of memDump

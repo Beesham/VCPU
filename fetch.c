@@ -1,11 +1,7 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
 
-#include "registersVar.h"
-
-#include "myDefines.h"
+#include "MyLib.h"
+//#include "RegistersVar.h"
+//#include "MyDefines.h"
 
 /*
 	fetch class
@@ -20,13 +16,14 @@
 void fetch(void *memptr){
 	int i;
 	
-	maR = pc;//PC;
+	//make this the load 
+	maR = PC;
 	for(i=0;i<sizeofins;i++){
 		mbR = (mbR << 8);
 		mbR += ((unsigned char*)memptr)[maR++];
 	}
 	irR = mbR;
 	//maR = PC;
-	pc = pc+sizeofins;
-	
+	PC = PC+sizeofins;
+	printf(" PC fetch: %08X ",PC);
 }//end of fetch class

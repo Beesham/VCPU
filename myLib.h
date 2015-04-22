@@ -8,18 +8,10 @@
 #include <string.h>
 #include <ctype.h>
 #include <string.h>
+#include <stdint.h>
 
-#include "help.c"
-#include "prompts.c"
-#include "errorCheck.c"
-#include "memMod.c"
-#include "writeFile.c"
-#include "loadFile.c"
-#include "disRegisters.c"
-#include "zero.c"
-#include "fetch.c"
-#include "insCycle.c"
+#include "RegistersVar.h"
+#include "MyDefines.h"
 
 
-#include "registersVar.h"
-#include "myDefines.h"
+
