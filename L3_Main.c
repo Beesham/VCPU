@@ -8,20 +8,12 @@ note: assuming long is 4 bytes
 
 */
 
-
-//#include "MyDefines.h"
 #include "MyLib.h"
-//#include "MyFunctions.h"
 
-//void disRegisters();
 void prompt();
 void quit();
 
-
 unsigned char MEMORY[memSize] = ""; 
-//unsigned char STACK;
-
-
 unsigned long reg[NUM_OF_REGS] = {'0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'};
 int signF = 0;
 int zeroF = 0;
@@ -30,28 +22,28 @@ int stopF = 0;
 int irF = 0;
 unsigned long mbR = 0 ,maR = 0;
 unsigned long irR = 0;
-//unsigned long pc = reg[15];
 unsigned short ir0 = 0, ir1 = 0;
-//unsigned long SP; 
+
+/*
+	main()
+	Description: prints description of the VCPU and the help menu
+				 zeroes the registers
+*/
 
 int main(){
-	//reg[13] = MEMORY[STACK_BEG];
 	printf("Name: Beesham Sarendranauth\n");
 	printf("Memory: 16Kbytes\n");
 	printf("The program starts by displaying an introduction memory and\nimplement a simple user interface for the Virtual CPU program.\n\n");
 	help();
-
 	zero();
-	//fetch(&MEMORY);
 
 	prompt();
-
 }//end of main
 
 /*
-	prompt class
+	prompt()
 	Description: prompts the user for an input
-	Does not take an argument nor return a value
+		Does not take an argument nor return a value
 */
 
 void prompt(){
@@ -122,7 +114,6 @@ void prompt(){
 
 			case('T'):
 			case('t'):{
-				//fetch(&MEMORY);
 				insCycle();
 				disRegisters();
 					  }//end of case t

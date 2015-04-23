@@ -4,7 +4,7 @@
 #include <ctype.h>
 
 /*
-	memMod class
+	memMod()
 	Description: prompts the user to enter a starting location in memory, then prompts the user
 				 to enter a new value
 	Does not return a value
@@ -18,31 +18,14 @@ void memMod(void *memptr){
 	unsigned exitval = '.';
 
 	printf("Enter starting address: ");
-	//fgets(startingaddrC,sizeof(startingaddrC),stdin);
 	fgets(startingaddrC,sizeof(startingaddrC)-1,stdin);
-	//sscanf(startingaddrC," %s",startingaddrC);
 	sscanf(startingaddrC," %x",&startingaddrI);
-	//printf("startingaddrI: %x\n",startingaddrI);
-
-	//startingaddrI=atoi(startingaddrC);
-	//startingaddrI=startingaddrC;
-	while(newVal!=exitval){//if (isprint(((char*)memptr)[startingaddrI])){	
-			printf("Enter new value for location %04X: ",startingaddrI);
-			fgets(newValueC,sizeof(newValueC)-1,stdin);
-			if(newValueC[0]==exitval){
-				break;
-			}
-			sscanf(newValueC," %X",&newVal);
-
-			//if(newVal==exitval){
-			//	break;
-			//}
-			//else{
-				//if (isxdigit(newVal)!=0){
-					(((char*)memptr)[startingaddrI]) = newVal;
-					startingaddrI++;
-				//}
-				//else perror("Not a hex value");
-			//}
+	while(newVal!=exitval){
+		printf("Enter new value for location %04X: ",startingaddrI);
+		fgets(newValueC,sizeof(newValueC)-1,stdin);
+		if(newValueC[0]==exitval)	break;
+		sscanf(newValueC," %X",&newVal);
+		(((char*)memptr)[startingaddrI]) = newVal;
+		startingaddrI++;
 	}
 }//end of memMod

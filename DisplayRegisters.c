@@ -1,10 +1,4 @@
-//#include <stdio.h>
-//#include <stdlib.h>
-//#include <string.h>
-//#include <ctype.h>
 
-//#include "RegistersVar.h"
-//#include "MyDefines.h"
 #include "MyLib.h"
 
 /*
@@ -16,17 +10,12 @@
 void disRegisters(){
 	int i;
 	int regSize=16;
-	//reg[15] = PC;
-	
-	//for(i=0;i<regSize;i++){
+
 	printf("\nR[0%d]: %08X R[0%d]: %08X R[0%d]: %08X R[0%d]: %08X R[0%d]: %08X\n",0,reg[0],1,reg[1],2,reg[2],3,reg[3],4,reg[4]);
 	printf("R[0%d]: %08X R[0%d]: %08X R[0%d]: %08X R[0%d]: %08X R[0%d]: %08X\n",5,reg[5],6,reg[6],7,reg[7],8,reg[8],9,reg[9]);
 	printf("R[%d]: %08X R[%d]: %08X R[%d]: %08X R[%d]: %08X R[%d]: %08X\n",10,reg[10],11,reg[11],12,reg[12],13,reg[13],14,reg[14]);
 	printf("R[%d]: %08X ",15,reg[15]);
-		//if(i%4==0) printf("\n");
-	//}
 
-	//printf("PC: %d  ",reg[15]);
 	printf("N: %d  ",signF);
 	printf("C: %d  ",carryF);
 	printf("Z: %d  ",zeroF);

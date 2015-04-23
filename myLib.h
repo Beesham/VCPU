@@ -7,7 +7,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include <string.h>
 #include <stdint.h>
 
 #include "RegistersVar.h"

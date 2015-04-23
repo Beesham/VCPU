@@ -4,7 +4,7 @@
 #include <ctype.h>
 
 /*
-	loadFile class
+	loadFile()
 	Description: Loads a file into memory with the max size being the size of memeory specified
 	Takes a pointer to memory and the max amount of bytes to read in
 	Returns an int; the number of bytes read in

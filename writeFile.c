@@ -4,7 +4,7 @@
 #include <ctype.h>
 
 /*
-	writeFile class
+	writeFile()
 	Description: Writes (creates if not exists) to a file a specified amount of bytes determined by the user
 	Takes a pointer to memory that is the max amount of bytes to write to the file
 	Does not return a value
@@ -15,7 +15,6 @@ void writeFile(void *memory){
 	char fileName[100];
 	char numBytesC[10];
 	int numBytes;
-	//char stuff[]="suffffffffff to write to fileeeee";
 	FILE *fileptr;
 
 	printf("Enter the name of your file: ");
