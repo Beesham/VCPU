@@ -83,6 +83,7 @@ void flags(){
 
 void dataProcessingIns(){
 	int i=0;
+	char temp;
 	short opCode = (irX&dataProOpM)>>8;
 	switch(opCode){
 		case 0://AND
@@ -106,8 +107,9 @@ void dataProcessingIns(){
 			flags();
 			break;
 		case 3://SXB
-			printf("\nSIGN Extension **IS NOT IMPLEMENTED CORRECTLY**");
-			ALU=(signed)reg[rn];
+			printf("\nSIGN Extension");
+			temp = reg[rn];
+			ALU=(signed long)temp;
 			reg[rd]=ALU;
 			zeroF = isZero(ALU);
 			signF = isSigned(ALU);
@@ -397,7 +399,7 @@ void pushPullIns(){
 	//printf("\nValue of maR EOF func: %X", maR);
 	//printf("\nValue of SP EOF func: %X", SP);
 	SP=maR;
-	irF=0;
+	//irF=0;
 }//end of pushPullIns
 
 void unconditionalBranch(){
@@ -519,8 +521,8 @@ void loadStoreIns(){
 			break;
 			case 0:
 				printf("\nStoring Byte to  memory");
-				maR = reg[rn];
-				mbR = reg[rd];
+				maR = reg[rd];
+				mbR = reg[rn];
 				MEMORY[maR]=mbR;//reg[rd]&byteM;
 			break;
 		}//end of switch
