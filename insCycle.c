@@ -276,7 +276,7 @@ void doConditionalBr(){
 	if(conditionalBranch()){
 		irF=0;
 		//printf("\nCondition is true");
-		//printf("\nValue of PC: %X",PC);
+		//printf("\nValue of PC: %X",PC);s
 		PC=PC+((signed long)brVal)-2;
 		//printf("\nBranching to loaction: %X",PC);
 	}
@@ -430,7 +430,7 @@ void unconditionalBranch(){
 		break;
 	case (1):
 		//printf(": with linker**");
-		LR=maR;		//this was LR=PC on 20150419 12:24
+		LR=PC;
 		PC=irX&unconBrOffsetM;
 		irF=0;
 		break;
