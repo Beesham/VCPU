@@ -1,10 +1,13 @@
+/*
+* @Author Beesham Sarendranauth
+* @Date: 2015/04/27
+*/
 
 #include "MyLib.h"
 
 /*
 	disRegisters class
 	Description: Displays the contents of all registers
-
 */
 
 void disRegisters(){

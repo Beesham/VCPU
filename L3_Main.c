@@ -1,11 +1,11 @@
 /*
-Author: Beesham Sarendranauth
-Description: The program starts by displaying an introduction memory and
-	implement a simple user interface for the Virtual CPU program.
-Date: 2015/02/06
-
-note: assuming long is 4 bytes 
-
+* @Author: Beesham Sarendranauth
+* @Description: The program starts by displaying an introduction memory and
+*				implement a simple user interface for the Virtual CPU program.
+* @Date: 2015/02/06
+*
+* note: assuming long is 4 bytes 
+*
 */
 
 #include "MyLib.h"
@@ -43,7 +43,6 @@ int main(){
 /*
 	prompt()
 	Description: prompts the user for an input
-		Does not take an argument nor return a value
 */
 
 void prompt(){

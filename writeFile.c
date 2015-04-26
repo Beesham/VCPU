@@ -1,7 +1,13 @@
+/*
+* @Author Beesham Sarendranauth
+* @Date: 2015/04/27
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include "MyDefines.h"
 
 /*
 	writeFile()
@@ -24,18 +30,22 @@ void writeFile(void *memory){
 	printf("Enter the number of bytes to write to file: ");
 	fgets(numBytesC,sizeof(numBytesC),stdin);
 	sscanf(numBytesC," %s",numBytesC);
-
+	
 	numBytes = atoi(numBytesC);
-
-	fileptr = fopen(fileName, "wb");
-
-	if(fileptr == NULL){
-		printf("Error opening file: %s\n",fileName);
-		perror("WriteFile");
+	if((numBytes) > memSize){
+		printf("Error: exceeding memory!\n");
 	}
 	else{
-		fseek(fileptr, 0, SEEK_SET);
-		fwrite(memory,sizeof(char),numBytes,fileptr);
-		fclose(fileptr);
+		fileptr = fopen(fileName, "wb");
+
+		if(fileptr == NULL){
+			printf("Error opening file: %s\n",fileName);
+			perror("WriteFile");
+		}
+		else{
+			fseek(fileptr, 0, SEEK_SET);
+			fwrite(memory,sizeof(char),numBytes,fileptr);
+			fclose(fileptr);
+		}
 	}
 }//end of writeFile

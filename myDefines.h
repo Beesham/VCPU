@@ -1,23 +1,28 @@
 /*
-	MyDefines
+* @Author Beesham Sarendranauth
+* @Date: 2015/04/27
+*/
+
+/*
+	MyDefines.h
 	Description: contains all/most of the defines needed for masking and other operations
 */
 
-#define memSize			0x4000//16384
-#define NUM_OF_REGS		16
-#define NUM_BITS_REG	16
-#define inputBuf		10
-#define sizeofins		4
-#define MAX32			0xFFFFFFFF //32
-#define REG_SIZE		4			//4 bytes
-#define STACK_BEG		0x3A0F
+#define memSize			0x4000			//16384 bytes of memory
+#define NUM_OF_REGS		16				//Number of registers in CPU
+#define NUM_BITS_REG	32				//Number of bit per register: 32
+#define NUM_BITS_INS	16				//Number of bit per instruction: 16
+#define NUM_BITS_BYTE	8				//NUmber of bits per byte
+#define inputBuf		32				//Size of input
+#define sizeofins		4				//Size of instruction: 4 byte 
+#define MAX32			0xFFFFFFFF		//Max value can be stores in a register
 
+#define PC	reg[15]						//Stack Pointer (SP)
+#define LR  reg[14]						//Link Register (LR)
+#define SP  reg[13]						//Program Counter (PC)
 
-//#define STACK MEMORY[STACK_BEG]
-#define PC	reg[15]	//reg[15]
-#define LR  reg[14] //reg[14]
-#define SP  reg[13] //reg[13]
-
+#define lsbM			0x00000001		//mask for least significat bit
+#define lowerByteM		0x000000FF		//masks the least significant byte/zeros all other bits except lsbyte
 #define memptrM			0x00003FFF		//memory pointer mask
 #define irM				0x0000FFFF		//irMask
 #define opCodeM			0x0003			//opcode mask

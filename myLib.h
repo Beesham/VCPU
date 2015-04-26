@@ -1,4 +1,9 @@
 /*
+* @Author Beesham Sarendranauth
+* @Date: 2015/04/27
+*/
+
+/*
 	myLib.h
 	Description: contains all libraries and includes need for compilation
 */
