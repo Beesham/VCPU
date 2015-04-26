@@ -23,7 +23,6 @@ unsigned short regListArr[7] = {NULL};
 */
 
 void splitIR(){
-	//printf("\n**Splitting irR**");
 	ir0 = (irR >> NUM_BITS_INS) & irM;
 	ir1 = irR & irM;
 
@@ -69,7 +68,6 @@ int isZero(unsigned long op1){
 
 int isCarry(unsigned long op1, unsigned long op2, unsigned C){//rd,rn,c
 	if((op2 == MAX32) && (C == 1)) return 1; //special case where op2 is at MAX32
-	//printf("\n**Calculating carryF: op1: %0X, op2: %0X, C: %d",op1,op2,C);
 	return ((op1 > (MAX32 - (op2) - C))?1:0); 
 }//end of isCarry
 
@@ -99,47 +97,46 @@ void dataProcessingIns(){
 	short opCode = (irX&dataProOpM)>>8;
 	switch(opCode){
 		case 0://AND
-			//printf("\nAND");
 			ALU=reg[rd] & reg[rn];
 			reg[rd]=ALU;
 			zeroF = isZero(ALU);
 			signF = isSigned(ALU);
 			break;
+
 		case 1://EOR
-			//printf("\nEOR");
 			ALU=reg[rd]^reg[rn];
 			reg[rd]=ALU;
 			zeroF = isZero(ALU);
 			signF = isSigned(ALU);
 			break;
+
 		case 2://SUB
-			//printf("\nNormal SUB");
 			ALU=reg[rd]+(~reg[rn])+1;
 			reg[rd] = ALU;
 			flags();
 			break;
+
 		case 3://SXB
-			//printf("\nSIGN Extension");
 			temp = reg[rn];
 			ALU=(signed long)temp;
 			reg[rd]=ALU;
 			zeroF = isZero(ALU);
 			signF = isSigned(ALU);
 			break;
+
 		case 4://ADD
-			//printf("\nNormal ADD");
 			ALU=reg[rd]+reg[rn];
 			flags();
 			reg[rd]=ALU;
 			break;
+
 		case 5://ADC
-			//printf("\nNormal Add with Carry");
 			ALU=reg[rd]+reg[rn]+carryF;
 			flags();
 			reg[rd]=ALU;
 			break;
+
 		case 6://LSR
-			//printf("\nLSR");
 			ALU=reg[rd] >> reg[rn]-1;
 			carryF = ALU&lsbM;
 			ALU=reg[rd]>>1;
@@ -147,8 +144,8 @@ void dataProcessingIns(){
 			zeroF = isZero(ALU);
 			signF = isSigned(ALU);
 			break;
+
 		case 7://LSL				
-			//printf("\nLSL");
 			//Shifts bits by reg[rn]-1 then masks the msb to set carry flag then shifts by 1 bit more
 			ALU=reg[rd] << reg[rn]-1;
 			carryF = ALU>>NUM_BITS_REG-1;
@@ -157,25 +154,25 @@ void dataProcessingIns(){
 			zeroF = isZero(ALU);
 			signF = isSigned(ALU);
 			break;
+
 		case 8://TST
-			//printf("\nTST");
 			ALU = reg[rd] & reg[rn];
 			zeroF = isZero(ALU);
 			signF = isSigned(ALU);
 			break;
+
 		case 9://TEQ
-			//printf("\nTEQ");
 			ALU = reg[rd]^reg[rn];
 			zeroF = isZero(ALU);
 			signF = isSigned(ALU);
 			break;
+
 		case 10://CMP
-			//printf("\nCMP");
 			ALU = reg[rd]+(~reg[rn])+1;
 			flags();
 			break;
+
 		case 11://ROR
-			//printf("\nROR");
 			ALU = reg[rd];
 			for(i=0;i<reg[rn];i++){
 				carryF = ALU&lsbM;
@@ -186,34 +183,35 @@ void dataProcessingIns(){
 			zeroF = isZero(ALU);
 			signF = isSigned(ALU);
 			break;
+
 		case 12://ORR
-			//printf("\nORR");
 			ALU=reg[rd]|reg[rn];
 			reg[rd]=ALU;
 			zeroF = isZero(ALU);
 			signF = isSigned(ALU);
 			break;
+
 		case 13://MOV
-			//printf("\nMOV");
 			ALU = reg[rn];
 			reg[rd]=ALU;
 			zeroF = isZero(ALU);
 			signF = isSigned(ALU);
 			break;
+
 		case 14://BIC
-			//printf("\nBIC");
 			ALU=reg[rd]&(~reg[rn]);
 			reg[rd]=ALU;
 			zeroF = isZero(ALU);
 			signF = isSigned(ALU);
 			break;
+
 		case 15://MVN
-			//printf("\nMVN");
 			ALU=(~reg[rn]);
 			reg[rd]=ALU;
 			zeroF = isZero(ALU);
 			signF = isSigned(ALU);
 			break;
+
 	}//end of switch
 }//end of dataProcessingIns
 
@@ -259,7 +257,6 @@ int conditionalBranch(){
 			return 1;
 			break;
 	}//end of switch
-	//printf("\nCondition is not true");
 	return 0;
 }//end of conditionalBranch
 
@@ -272,15 +269,11 @@ int conditionalBranch(){
 
 void doConditionalBr(){
 	char brVal = irX&lowerBitsM;
-	//printf("\n**Conditional Branch**");
 	if(conditionalBranch()){
 		irF=0;
-		//printf("\nCondition is true");
-		//printf("\nValue of PC: %X",PC);s
 		PC=PC+((signed long)brVal)-2;
-		//printf("\nBranching to loaction: %X",PC);
 	}
-}
+}//end of doConditionalBr
 
 
 /*
@@ -292,74 +285,60 @@ void doConditionalBr(){
 
 void pushPullIns(){
 	int i,j;
-	//printf("\n**Push or Pull Instruction**");
+
 	maR = SP;
 	switch(LBit){
 	case(0)://PSH
-		//printf("\nPush Instruction");
 		switch(HBBit){
 		case(0)://Low Reg
 			for(i=(NUM_OF_REGS/2);i>=0;i--){//loop to push registers highest to lowest		
-				//printf("\nPushing Low register(s)");
-				if(((regListBits>>i)&1) == 1){//shifts by i(the bit corresponding to the register), i will be the register to push	
-					//printf("\nPushing registers %d",i);			
+				if(((regListBits>>i)&1) == 1){//shifts by i(the bit corresponding to the register), i will be the register to push				
 					mbR = reg[i];
 					for(j=0;j<sizeofins;j++){					
 						--maR;
 						maR = maR&memptrM;
-						//printf("\nPushing: %X to location %X",(mbR>>NUM_BITS_BYTE*j),maR);
 						MEMORY[maR]=(mbR>>NUM_BITS_BYTE*j);//mem location = mbR shifted by 8*j(0-3)=8,16,24
 					}					
 				}
 			}
 
-			if(RBit == 1){
-				//printf("\nThere is an extra push");
+			if(RBit == 1){//push LR
 				LR=PC;
 				mbR=LR;
 				for(j=0;j<sizeofins;j++){					
 					--maR;
 					maR = maR&memptrM;
-					//printf("\nPushing: %X to location %X",(mbR>>NUM_BITS_BYTE*j),maR);
 					MEMORY[maR]=(mbR>>NUM_BITS_BYTE*j);
 				}
 			}
-			//else printf("\nNo extra push");
 			break;
 		case(1)://High Reg
-			//printf("\nPushing High Registers");
 			for(i=(NUM_OF_REGS/2);i>=0;i--){
 				if(((regListBits>>i)&1) == 1){
-					//printf("\nPushing registers %d",i+8);
 					mbR = reg[(i+(NUM_OF_REGS/2))];//add 8 because we are pushing the high registers, i+8: 0+8=8, 8+8=16
 					for(j=0;j<sizeofins;j++){					
 						--maR;
 						maR = maR&memptrM;
-						//printf("\nPushing: %X to location %X",(mbR>>NUM_BITS_BYTE*j),maR);
 						MEMORY[maR]=(mbR>>NUM_BITS_BYTE*j);
 					}	
 				}
 			}
 
-			if(RBit == 1){
-				//printf("\nThere is an extra push");
+			if(RBit == 1){//push LR
 				LR=PC;
 				mbR=LR;
 				for(j=0;j<sizeofins;j++){					
 					--maR;
 					maR = maR&memptrM;
-					//printf("\nPushing: %X to location %X",(mbR>>NUM_BITS_BYTE*j),maR);
 					MEMORY[maR]=(mbR>>NUM_BITS_BYTE*j);
 				}
 			}
-			//else printf("\nNo extra push"); 
 			break;
 		}
 		break;
+
 	case(1)://PUL
-		//printf("\nPull Instruction");
-		if(RBit == 1){
-			//printf("\nThere is an extra Pull");
+		if(RBit == 1){//pull LR
 			maR = SP;
 			mbR = MEMORY[maR];
 			for(j=0;j<sizeofins;j++){
@@ -370,29 +349,22 @@ void pushPullIns(){
 			PC = mbR;
 			irF=0;
 		}
-		//else printf("\nNo extra pull");
 
 		switch(HBBit){
 			case(0)://Low Reg
-				//printf("\nPulling into Low Registers");
 				maR = SP;
 				for(i=0;i<(NUM_OF_REGS/2);i++){
 					if(((regListBits>>i)&1) == 1){		
-						//printf("\nPulling into reg: %d",i);
-						//printf("\nValue of SP: %X", SP);
 						mbR = MEMORY[maR];
 						for(j=0;j<sizeofins;j++){
 							mbR = (mbR << NUM_BITS_BYTE);
 							mbR += ((unsigned char*)MEMORY)[maR++];						
 						}				
-						reg[i] = mbR;
-						//irF=0;				
+						reg[i] = mbR;				
 					}
 			}
 			break;
 			case(1)://High Reg
-				//printf("\nPulling High registers");
-				//printf("\nValue of SP: %X", SP);
 				maR = SP;
 				for(i=0;i<(NUM_OF_REGS/2);i++){
 					if(((regListBits>>i)&1) == 1){						
@@ -402,7 +374,6 @@ void pushPullIns(){
 							mbR += ((unsigned char*)MEMORY)[maR++];						
 						}
 						reg[(i+(NUM_OF_REGS/2))] = mbR;
-						//irF=0;
 					}
 				}
 			break;
@@ -421,15 +392,13 @@ void pushPullIns(){
 
 void unconditionalBranch(){
 	short linkbit = (irX&unconBrLiM)>>12;
-	//printf("\n**Unconditional Branch");
 	switch(linkbit){
-	case (0):
-		//printf(": without linker**");
+	case (0)://no linker
 		PC=(irX&lowerBitsM);
 		irF=0;
 		break;
-	case (1):
-		//printf(": with linker**");
+
+	case (1)://with liker
 		LR=PC;
 		PC=irX&unconBrOffsetM;
 		irF=0;
@@ -443,7 +412,6 @@ void unconditionalBranch(){
 */
 
 void movIns(){
-	//printf("\nImmediate Move");
 	ALU = immeVal;
 	reg[rd] = ALU;
 	zeroF = isZero(ALU);
@@ -456,7 +424,6 @@ void movIns(){
 */
 
 void addIns(){
-	//printf("\nImmediate Add");
 	ALU	 = reg[rd] + immeVal;
 	carryF = isCarry(reg[rd],(immeVal),carryF);
 	reg[rd] = ALU;
@@ -469,14 +436,12 @@ void addIns(){
 	Description: subtract the immediate value from destination register
 */
 
-void subIns(){
-	//printf("\nImmediate Sub");	
+void subIns(){	
 	ALU = reg[rd] + (~immeVal) + 1;	
 	carryF = isCarry(reg[rd],(~immeVal),carryF);
 	reg[rd] = ALU;	
 	zeroF = isZero(ALU);
 	signF = isSigned(ALU);
-	
 }//end of subIns
 
 /*
@@ -484,8 +449,7 @@ void subIns(){
 	Description: compares the immediate value to destination register
 */
 
-void cmpIns(){
-	//printf("\nImmediate Comp INS");	
+void cmpIns(){	
 	ALU = reg[rd]+(~immeVal)+1; 
 	zeroF = isZero(ALU);
 	signF = isSigned(ALU);
@@ -503,13 +467,11 @@ void cmpIns(){
 
 void loadStoreIns(){
 	int i;
-	//printf("\n**Load/Store Instruction**");
+
 	switch(HBBit){//switch load a byte or a word
 	case 0://store to memory
-		//printf("\nLoading/Storing Word\n");
 		switch (LBit){//switch to do a load or a store
 			case 1:				
-				//printf("\nLoading Word from mem");
 				maR=reg[rn];
 				mbR = MEMORY[maR];
 				for(i=0;i<sizeofins;i++){
@@ -520,11 +482,9 @@ void loadStoreIns(){
 			break;
 
 			case 0:
-				//printf("\nStoring Word to mem");
 				maR = reg[rn];
 				mbR = reg[rd];
 				for(i=sizeofins-1;i>=0;i--){
-					//printf("\nStoring: %X",(mbR>>8*i));
 					MEMORY[maR++]=(mbR>>8*i);
 				}		
 			break;
@@ -532,16 +492,13 @@ void loadStoreIns(){
 		break;
 
 	case 1://load from memory
-		//printf("\nLoad/Store byte");
 		switch (LBit){
 			case 1://loading byte
-				//printf("\nLoading Byte from memory");
 				maR = reg[rn];
 				mbR = MEMORY[maR];
 				reg[rd] = mbR&lowerByteM;//MEMORY[maR]&byteM;
 			break;
 			case 0://storing byte
-				//printf("\nStoring Byte to  memory");
 				maR = reg[rd];
 				mbR = reg[rn];
 				MEMORY[maR]=mbR;//reg[rd]&byteM;
@@ -599,8 +556,7 @@ void stop(){
 */
 
 void insType(){
-	//printf("\n**Determining ins type**");
-	switch((irX >> 13)){	//irX is shifted by 13 bits because we want the value of the top 2 bits of the register
+	switch((irX >> 13)){//irX is shifted by 13 bits because we want the value of the top 2 bits of the register
 		case 0: dataProcessingIns();
 			break;
 		case 1: loadStoreIns();
@@ -617,8 +573,7 @@ void insType(){
 		case 7: stop();
 			break;
 	}//end of switch
-
-}
+}//end of insType
 
 
 
@@ -634,15 +589,9 @@ void insType(){
 	7: stop
 */
 void execute(){
-	//printf("\n**Executing**");
-	//printf("\nirR: %08X",irR);
-	//printf("\tirX: %04X ",irX);
 	immeVal = (irX& immeM)>>4;		//determines the immediate value
-	//printf("\nimmeVal: %04X ",immeVal);
 	rd = (irX & rdM);				//determines the register destination value 
 	rn = (irX & rnM)>>4;			//determines the register source value
-	//printf("\nrd: %08d",rd);
-	//printf("\nrn: %08d",rn);
 	regListBits = irX&lowerBitsM;	//masks out the lower 8 bits
 	LBit = (irX & LBitM);	
 	LBit = LBit>>11;
@@ -653,7 +602,6 @@ void execute(){
 }//end of execute
 
 void insCycle(){
-	//printf("\nINS Cycle\n");
 	if(irF==0){
 		fetch(&MEMORY);	
 		splitIR();					//splits the instruction registers
